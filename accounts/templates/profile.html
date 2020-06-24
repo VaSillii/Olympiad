@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= Profile Section ======= -->
+<main id="main">
+    <section class="contact">
+        <div id="auth" class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Личный кабинет</h2>
+                {{form.errors}}
+            </div>
+            <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                <div class="php-email-form w-100 d-flex justify-content-center">
+                    <form class="form col-md-5 col-sm-12 col-12" action="{% url 'accounts:profile' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="mt-2 form-group">
+                            {{ form.username.label_tag }}
+                            <input type="text" class="form-control" name="username" id="id_username"
+                                   value="{{ request.user.username }}"/>
+                            {{ form.username.errors }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.name.label_tag }}
+                            <input type="text" class="form-control" name="name" id="id_name"
+                                   value="{{ request.user.first_name }}"/>
+                            {{ form.name.errors }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.surname.label_tag }}
+                            <input type="text" class="form-control" name="surname" id="id_surname"
+                                   value="{{ request.user.last_name }}"/>
+                            {{ form.surname.errors }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email.label_tag }}
+                            <input type="text" class="form-control" name="email" id="id_email"
+                                   value="{{ request.user.email }}"/>
+                            {{ form.email.errors }}
+                        </div>
+                        <div class="form-group">
+                           <a class="btn-link mr-2" href="{% url 'password_reset' %}">Забыли пароль?</a>
+                           <a class="btn-link" href="{% url 'password_change' %}">Изменить пароль?</a>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="next">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- End Profile Section -->
+{% endblock %}

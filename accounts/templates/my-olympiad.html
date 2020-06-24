@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= My Olympiad Section ======= -->
+<main id="main">
+    <section class="contact">
+        <div id="auth" class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Мои Олимпиады</h2>
+                {{form.errors}}
+            </div>
+            <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                <div class="php-email-form w-100">
+                    <div class="row">
+                        {% for olympiad in olympiads %}
+
+                        <div class="col-6 p-2">
+                            <div class="alert alert-primary ">
+                                <div class="member p-2">
+                                    <div class="member-img">
+                                    </div>
+                                </div>
+                                <div class="member-info">
+                                    <h4>{{olympiad.option.category}}</h4>
+                                    <span>Вариант: {{olympiad.option.id}}</span>
+                                    <p>Количество правильных ответов: {{olympiad.correct_answer}}/{{olympiad.option.questions.count}}</p>
+                                    <p>Процентное соотношение: {{ olympiad.correct_answer|divide:olympiad.option.questions.count }}%</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+</main>
+<!-- End My Olympiad Section -->
+{% endblock %}

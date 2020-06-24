@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= Auth Section ======= -->
+<main id="main">
+    <section class="mt-section d-block">
+        <div id="auth" class="contact">
+            <div class="container">
+                <div class="section-title" data-aos="fade-up">
+                    <h2>Регистрация пользователя</h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                        <form action="{% url 'register'%}" method="post" role="form" class="php-email-form">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    {{ form.surname.label }}
+                                    {{ form.surname }}
+                                    {{ form.surname.errors }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ form.name.label }}
+                                    {{ form.name }}
+                                    {{ form.name.errors }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ form.username.label }}
+                                    {{ form.username }}
+                                    {{ form.username.errors }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ form.email.label }}
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ form.password1.label }}
+                                    {{ form.password1 }}
+                                    {{ form.password1.errors }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ form.password2.label }}
+                                    {{ form.password2 }}
+                                    {{ form.password2.errors }}
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit">Зарегистрироваться</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- End Auth Section -->
+
+{% endblock %}

@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'accounts',
+    'variant',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +59,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'olympiad/templates'),
+            os.path.join(BASE_DIR, 'accounts/templates'),
+            os.path.join(BASE_DIR, 'variant/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -65,6 +70,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'custom_tags': 'olympiad.filter-tag.division'
+            }
         },
     },
 ]
@@ -78,7 +86,7 @@ WSGI_APPLICATION = 'olympiad.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'olympiade',
+        'NAME': 'olympiad',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -127,6 +135,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, 'olympiad/static'),
+    os.path.join(BASE_DIR, 'accounts/static'),
+    os.path.join(BASE_DIR, 'variant/static'),
 ]
 
 # Media files

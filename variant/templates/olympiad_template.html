@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ======= Olympiad Section ======= -->
+<main id="main">
+    <section class="contact">
+        <div id="auth" class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Олимпиада</h2>
+                <p>Выбор варианта</p>
+            </div>
+            <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                <div class="php-email-form w-100 row">
+                    {% for item in option %}
+                    <a href="{% url 'variant:question_olympiad' index_option=item.id %}" class="col-2 p-2">
+                        <div class="alert alert-info text-center">
+                            {{item.id}}
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- End Olympiad Section -->
+{% endblock %}

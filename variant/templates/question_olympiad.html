@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!-- ======= Olympiad Section ======= -->
+<main id="main">
+    <section class="contact">
+        <div id="auth" class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Олимпиада</h2>
+                <p>Вариант {{option.id}}</p>
+            </div>
+            <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                <div class="php-email-form w-100 row">
+
+                    <form class="form col-12" id="form-questions"
+                          action="{% url 'variant:question_olympiad' index_option=option.id%}" method="post">
+                        {% csrf_token %}
+
+                        <p class="">В качестве ответа введите число с точностью до 2 знаков или краткий ответ:</p>
+                        <input type="hidden" name="time_start" value="{{ time_start|date:'Y-m-d H:i' }}"/>
+
+                        {% for item in option.questions.all %}
+
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="question_{{item.id}}">{{ item.question }}</label>
+                            <div class="col-6 p-2">
+                                {{ item.img_tag }}
+                            </div>
+
+                            <input type="text" class="form-control" required name="{{item.id}}"
+                                   id="question_{{item.id}}"/>
+                        </div>
+                        {% endfor %}
+
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="next">Отправить</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- End Olympiad Section -->
+{% endblock %}
