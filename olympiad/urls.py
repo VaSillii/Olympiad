@@ -19,10 +19,13 @@ from django.urls import path, include, reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import BaseMainPage, FormRegister
+from .views import BaseMainPage, FormRegister, MathAnalisePage, DescriptiveGeoPage, LinAlPage
 
 urlpatterns = [
     path('', BaseMainPage.as_view(), name='base_page'),
+    path('math-analise/', MathAnalisePage.as_view(), name='math_analise'),
+    path('descriptive-geo/', DescriptiveGeoPage.as_view(), name='descriptive_geo'),
+    path('linal/', LinAlPage.as_view(), name='linal'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('variant/', include('variant.urls')),

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header id="header" class="fixed-top ">
+    <div class="container">
+
+        <div class="logo float-left">
+            <h1 class="text-light"><a href="{% url 'base_page' %}"><span>Calculus</span></a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <nav class="nav-menu float-right d-none d-lg-block">
+            <ul>
+                <li><a href="{% url 'base_page' %}#hero">Главная</a></li>
+                <li >
+                    <ul>
+                        <li class="drop-down active">
+                            <a href="#">Методические указания</a>
+                            <ul>
+                                <li><a href="{% url 'math_analise' %}">Математический анализ</a></li>
+                                <li><a href="{% url 'linal' %}">Линейная алгебра</a></li>
+                                <li><a href="{% url 'descriptive_geo' %}">Начертательная геометрия</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'variant:olympiad' %}">Олимпиады</a></li>
+
+                 {% if request.user.is_authenticated %}
+                <li>
+                    <ul>
+                        <li class="drop-down">
+                            <a href="#">
+                                <img class="img-circle img-fluid img-thumbnail" width="25px" height="25px" src="{{ request.user.profile.get_avatar }}">
+                                {{ request.user.username }}
+                            </a>
+                            <ul>
+                                <li><a href="{% url 'accounts:profile' %}">Личный кабинет</a></li>
+                                <li><a href="{% url 'accounts:my_olympiad' %}">Мои олимпиады</a></li>
+                                <li><a href="{% url 'logout' %}?next=/">Выход</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="">
+                    <a class="btn-get-started mt-0" href="{% url 'login' %}">Войти</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- .nav-menu -->
+    </div>
+</header><!-- End Header -->
+{% endblock %}
+
+{% block content %}
+<!-- ======= Addition Info Section ======= -->
+<main id="main">
+    <section class="contact">
+        <div id="auth" class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Линейная алгебра</h2>
+            </div>
+            <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                <div class="php-email-form w-100">
+                    <p>
+                        Лине́йная а́лгебра — раздел алгебры, изучающий объекты линейной природы: векторные (или
+                        линейные) пространства, линейные отображения[⇨], системы линейных уравнений[⇨], среди основных
+                        инструментов, используемых в линейной алгебре — определители, матрицы[⇨], сопряжение. Теория
+                        инвариантов и тензорное исчисление обычно (в целом или частично) также считаются составными
+                        частями линейной алгебры[1]. Такие объекты как квадратичные и билинейные формы[⇨], тензоры[⇨] и
+                        операции как тензорное произведение непосредственно вытекают из изучения линейных пространств,
+                        но как таковые относятся к полилинейной алгебре.
+                    </p>
+                    <p>
+                        Линейная алгебра обобщена средствами общей алгебры, в частности, современное определение
+                        линейного (векторного) пространства[⇨] опирается исключительно на абстрактные структуры, а
+                        многие результаты линейной алгебры обобщены на произвольные модули над кольцом. Более того,
+                        методы линейной алгебры широко используются и в других разделах общей алгебры, в частности,
+                        нередко применяется такой приём, как сведение абстрактных структур к линейным и изучение их
+                        относительно простыми и хорошо проработанными средствами линейной алгебры, так, например,
+                        реализуется в теории представлений групп[⇨]. Функциональный анализ возник как применение методов
+                        математического анализа и линейной алгебры к бесконечномерным линейным пространствам, и во
+                        многом базируется на методах линейной алгебры и в дальнейших своих обобщениях. Также линейная
+                        алгебра нашла широкое применение в многочисленных приложениях (в том числе, в линейном
+                        программировании[⇨], в эконометрике[⇨]) и естественных науках (например, в квантовой
+                        механике[⇨]).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- End Addition Info Section -->
+{% endblock %}
