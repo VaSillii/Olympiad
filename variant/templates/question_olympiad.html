@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-
+{% load static %}
 {% block content %}
 <!-- ======= Olympiad Section ======= -->
 <main id="main">
@@ -13,34 +13,115 @@
             <div class="col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
                 <div class="php-email-form w-100 row">
 
-                    <form class="form col-12" id="form-questions"
-                          action="{% url 'variant:question_olympiad' index_option=option.id%}" method="post">
-                        {% csrf_token %}
+                    <div class="col-12">
+                        {% if questions.has_next %}
+                        <form class="form col-12" id="form-questions"
+                              action="{% url 'variant:question_olympiad' index_option=option.id %}?page={{ questions.next_page_number }}"
+                              method="post">
+                            {% else %}
+                            <form class="form col-12" id="form-questions"
+                                  action="{% url 'variant:question_olympiad' index_option=option.id %}?page={{questions.number}}&submit=yes"
+                                  method="post">
+                                {% endif %}
 
-                        <p class="">В качестве ответа введите число с точностью до 2 знаков или краткий ответ:</p>
-                        <input type="hidden" name="time_start" value="{{ time_start|date:'Y-m-d H:i' }}"/>
+                                {% csrf_token %}
+                                <div class="pagination w-100">
+                                    <div class="">
+                                        {% for num in questions.paginator.page_range %}
+                                        {% if num == questions.number %}
+                                        <span class="btn-get-started text-secondary current bg-light border-info"><b>{{ num }}</b></span>
+                                        {% else %}
+                                        <button type="submit" class="btn-click text-secondary btn-get-started bg-light" data-href="?page={{ num }}">
+                                            {{ num }}
+                                        </button>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
 
-                        {% for item in option.questions.all %}
+                                {% for question in questions%}
+                                <div class="form-group">
+                                    <p class="">В качестве ответа введите число с точностью до 2 знаков или краткий
+                                        ответ:</p>
+                                    <label class="font-weight-bold" for="question_{{question.id}}">
+                                        {{ question.question }}
+                                    </label>
+                                    <div class="col-6 p-2">
+                                        {{ question.img_tag }}
+                                    </div>
+                                    <input type="text" class="form-control" required
+                                           value="{{ question_val|get_item:question.id }}"
+                                           name="{{question.id}}" id="question_{{question.id}}"/>
+                                    <input type="hidden" name="time_start" value="{{ time_start|date:'Y-m-d H:i' }}"/>
+                                    {% for item in option.questions.all %}
+                                    {% if item.id != question.id %}
+                                    <input type="hidden" name="{{item.id}}"
+                                           value="{{question_val|get_item:item.id}}"
+                                           id="question_{{item.id}}"/>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+                                <div class="w-100  d-flex justify-content-between">
+                                    <div>
+                                        {% if questions.has_previous %}
+                                        <button id="qwe" class="btn btn-lg btn-primary btn-block" type="submit"
+                                                name="next">
+                                            Предыдущий вопрос
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        {% if questions.has_next  %}
+                                        <button class="btn btn-lg btn-primary btn-block mr-0" type="submit" name="next">
+                                            Следующий вопрос
+                                        </button>
+                                        {% else %}
+                                        <button class="btn btn-lg btn-primary btn-block mr-0" type="submit" name="next">
+                                            Отправить
+                                        </button>
+                                        {% endif %}
+                                    </div>
 
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="question_{{item.id}}">{{ item.question }}</label>
-                            <div class="col-6 p-2">
-                                {{ item.img_tag }}
-                            </div>
-
-                            <input type="text" class="form-control" required name="{{item.id}}"
-                                   id="question_{{item.id}}"/>
-                        </div>
-                        {% endfor %}
-
-
-                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="next">Отправить</button>
-
-                    </form>
+                                </div>
+                            </form>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 </main>
 <!-- End Olympiad Section -->
+{% endblock %}
+
+{% block JSFile %}
+<!-- Support JS Files -->
+<script src="{% static 'different/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'different/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'different/jquery.easing/jquery.easing.min.js' %}"></script>
+
+
+<!--<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>-->
+<script src="{% static 'different//venobox/venobox.min.js' %}"></script>
+<script src="{% static 'different/waypoints/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'different/counterup/counterup.min.js' %}"></script>
+<script src="{% static 'different/owl.carousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'different/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'different/aos/aos.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    $('#qwe').on('click', function () {
+            $('#form-questions').attr('action', "{% url 'variant:question_olympiad' index_option=option.id %}?page=" +
+                "{% if questions.has_previous %}" +
+                "{{questions.previous_page_number}}" +
+                "{% endif %}&flag=True")
+        }
+    );
+
+    $('.btn-click').on('click', function () {
+        $('#form-questions').attr('action', "{% url 'variant:question_olympiad' index_option=option.id %}" + $(this).attr('data-href'));
+    })
+</script>
 {% endblock %}

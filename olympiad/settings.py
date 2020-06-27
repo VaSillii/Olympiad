@@ -71,7 +71,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'custom_tags': 'olympiad.filter-tag.division'
+                'custom_tags': 'olympiad.filter-tag.custom_tag'
             }
         },
     },

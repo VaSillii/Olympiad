@@ -403,7 +403,11 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   color: #fff;
   -webkit-animation-delay: 0.8s;
   animation-delay: 0.8s;
-  border: 2px solid #68A4C4;
+  border: 2px solid #68A4C4 !important;
+}
+
+.current {
+  background: #68A4C4 !important;
 }
 
 .btn-get-started:hover {
