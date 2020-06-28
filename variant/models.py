@@ -1,6 +1,16 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
+
+
+def validate_file_extension(value):
+    if value.file.content_type != 'text/plain':
+        raise ValidationError('The uploaded file must be a text file')
+
+
+def content_file_name(user, filename):
+    return "File-answer/{folder}/{filename}".format(folder=user.user.username, filename=filename)
 
 
 class QuestionAnswerOlympiad(models.Model):
@@ -56,6 +66,7 @@ class UserResultOlympiad(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     correct_answer = models.IntegerField(default=0, verbose_name='Количество правильных ответов')
     option = models.ForeignKey(VariantOlympiad, on_delete=models.CASCADE, verbose_name='Вариант олимпиады')
+    file_answer = models.FileField(upload_to=content_file_name, validators=[validate_file_extension], blank=True, null=True, verbose_name='Файл с ответом на вопрос')
     time_start_olympiad = models.DateTimeField(auto_now_add=True, null=True, blank=True,
                                                verbose_name='Время начала олимпиады')
     end_start_olympiad = models.DateTimeField(auto_now_add=True, null=True, blank=True,

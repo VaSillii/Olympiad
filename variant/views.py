@@ -43,6 +43,7 @@ def get_option(request, index_option):
                 option=option,
                 time_start_olympiad=date,
                 end_start_olympiad=timezone.now,
+                file_answer=request.FILES['sentFile']
             )
             return redirect('accounts:my_olympiad')
 

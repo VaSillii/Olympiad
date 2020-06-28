@@ -134,8 +134,8 @@
     offset: '80%'
   });
 
-  // Testimonials carousel (uses the Owl Carousel library)
-  $(".testimonials-carousel").owlCarousel({
+  // comment carousel (uses the Owl Carousel library)
+  $(".comment-carousel").owlCarousel({
     autoplay: true,
     dots: true,
     loop: true,

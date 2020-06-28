@@ -17,11 +17,11 @@
                         {% if questions.has_next %}
                         <form class="form col-12" id="form-questions"
                               action="{% url 'variant:question_olympiad' index_option=option.id %}?page={{ questions.next_page_number }}"
-                              method="post">
+                              method="post" enctype="multipart/form-data">
                             {% else %}
                             <form class="form col-12" id="form-questions"
                                   action="{% url 'variant:question_olympiad' index_option=option.id %}?page={{questions.number}}&submit=yes"
-                                  method="post">
+                                  method="post" enctype="multipart/form-data">
                                 {% endif %}
 
                                 {% csrf_token %}
@@ -42,7 +42,7 @@
                                 {% for question in questions%}
                                 <div class="form-group">
                                     <p class="">В качестве ответа введите число с точностью до 2 знаков или краткий
-                                        ответ:</p>
+                                        ответ, файл с подробным ответом/решением на все вопросы можно прикрепить в конце:</p>
                                     <label class="font-weight-bold" for="question_{{question.id}}">
                                         {{ question.question }}
                                     </label>
@@ -53,6 +53,12 @@
                                            value="{{ question_val|get_item:question.id }}"
                                            name="{{question.id}}" id="question_{{question.id}}"/>
                                     <input type="hidden" name="time_start" value="{{ time_start|date:'Y-m-d H:i' }}"/>
+                                    {% if not questions.has_next %}
+                                    <div class="mt-2">
+                                        Прикрепите файл c подробным решением в формате .txt:
+                                    </div>
+                                    <input type="file" name="sentFile" value="{{request.FILES.sentFile}}"/>
+                                    {% endif %}
                                     {% for item in option.questions.all %}
                                     {% if item.id != question.id %}
                                     <input type="hidden" name="{{item.id}}"
@@ -77,6 +83,7 @@
                                             Следующий вопрос
                                         </button>
                                         {% else %}
+
                                         <button class="btn btn-lg btn-primary btn-block mr-0" type="submit" name="next">
                                             Отправить
                                         </button>
